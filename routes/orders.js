@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order');
 
+// TEST route om te checken of router werkt
+router.get('/test', (req, res) => {
+  res.send('Router werkt!');
+});
+
 // CREATE order
 router.post('/', async (req, res) => {
   try {
