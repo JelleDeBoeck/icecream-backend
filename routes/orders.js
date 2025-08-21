@@ -47,6 +47,7 @@ router.patch('/:id', async (req, res) => {
       req.body,
       { new: true }
     );
+    if (!updatedOrder) return res.status(404).json({ message: 'Order niet gevonden' });
     res.json(updatedOrder);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -56,8 +57,9 @@ router.patch('/:id', async (req, res) => {
 // DELETE order
 router.delete('/:id', async (req, res) => {
   try {
-    await Order.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Order deleted' });
+    const deletedOrder = await Order.findByIdAndDelete(req.params.id);
+    if (!deletedOrder) return res.status(404).json({ message: 'Order niet gevonden' });
+    res.json({ message: 'Order verwijderd' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
